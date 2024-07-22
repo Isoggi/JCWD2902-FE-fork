@@ -53,7 +53,7 @@ export default function Navbar({}: Props) {
         </div>
 
         <div className="items—center justify-center ">
-          <button type="button"></button>
+          <button title="firstButton" type="button"></button>
         </div>
       </div>
     </div>
