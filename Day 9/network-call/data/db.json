@@ -1,0 +1,27 @@
+{
+  "superheroes": [
+    {
+      "id": 1,
+      "name": "Batman",
+      "color": "Black"
+    },
+    {
+      "id": 2,
+      "name": "Superman",
+      "color": "Blue"
+    },
+    {
+      "id": 3,
+      "name": "Flash",
+      "color": "Red"
+    },
+    {
+      "id": 4
+    },
+    {
+      "color": "black",
+      "name": "Batman Classic",
+      "id": 5
+    }
+  ]
+}
