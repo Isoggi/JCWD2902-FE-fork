@@ -9,7 +9,7 @@ export type TContextUser = {
   changeAvatar: (avatar_url: string) => void;
 } | null;
 
-export type TContextUserState = [
+export type TContextUserArrays = [
   user: TUser,
   reset: () => void,
   changeName: (name: string) => void,

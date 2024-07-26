@@ -1,7 +1,11 @@
-import React from "react";
+import LoginComponent from "@/components/login.component";
 
 type Props = {};
 
 export default function Login({}: Props) {
-  return <div>Login</div>;
+  return (
+    <div>
+      <LoginComponent />
+    </div>
+  );
 }

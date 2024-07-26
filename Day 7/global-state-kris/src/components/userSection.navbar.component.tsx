@@ -3,24 +3,29 @@ import { UserContext } from "@/providers/context.provider";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useContext } from "react";
+import { init } from "@/constant/user.constant";
 
 type Props = {};
 
 export default function UserSection({}: Props) {
   const userContext = useContext(UserContext);
-  userContext?.changeAvatar("/vercel.svg");
-  userContext?.changeName("Kris");
+  // userContext?.changeName("Kris");
+  // userContext?.changeAvatar("/vercel.svg");
   return (
-    <div className={`gap-2 ${userContext?.user ? "hidden" : "flex"}`}>
+    <div className={"gap-2 flex"}>
       {userContext?.user ? (
         <div>
-          <Link href={"/login"}>Login</Link>
-          <Link href={"/register"}>Register</Link>
+          <div className="flex items-center"> {userContext?.user?.name}</div>
+          <img
+            src={userContext?.user?.avatar_url ?? ""}
+            alt="Avatar"
+            className="w-6 aspect-square rounded-full bg-white"
+          />
         </div>
       ) : (
         <div>
-          <div>{userContext?.user?.name}</div>
-          <Image src={userContext?.user?.avatar_url ?? ""} alt="Avatar" />
+          <Link href={"/login"}>Login</Link>
+          <Link href={"/register"}>Register</Link>
         </div>
       )}
     </div>
