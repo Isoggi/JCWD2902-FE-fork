@@ -22,6 +22,11 @@
       "color": "black",
       "name": "Batman Classic",
       "id": 5
+    },
+    {
+      "name": "Captain USA",
+      "color": "Red Green Blue",
+      "id": 6
     }
   ]
 }

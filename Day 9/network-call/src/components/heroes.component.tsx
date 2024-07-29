@@ -15,10 +15,33 @@ import {
 } from "@/components/ui/table";
 import { api } from "@/config/axios.config";
 import { HeroForm } from "./form.component";
+import { MoreHorizontal } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "./ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
+
+export type THero = (typeof superheroes)[0] | null;
 
 export function DataTableDemo() {
   const [data, setData] = React.useState<typeof superheroes>([]);
   const [search, setSearch] = React.useState<string>("");
+  const [editedHero, setEditedHero] = React.useState<THero>(null);
 
   const fetchSuperHeroes = async () => {
     const response = await api.get("/superheroes", {
@@ -27,6 +50,15 @@ export function DataTableDemo() {
       },
     });
     setData(response.data);
+  };
+
+  const deleteHero = async (id: number) => {
+    await api.delete(`/superheroes/${id}`);
+    await fetchSuperHeroes();
+  };
+
+  const selectHero = async (hero: THero) => {
+    setEditedHero(hero);
   };
 
   React.useEffect(() => {
@@ -48,6 +80,7 @@ export function DataTableDemo() {
             <TableRow>
               <TableHead> ID</TableHead>
               <TableHead> NAME</TableHead>
+              <TableHead> ACTION</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -55,6 +88,67 @@ export function DataTableDemo() {
               <TableRow key={key}>
                 <TableCell>{hero.id}</TableCell>
                 <TableCell>{hero.name}</TableCell>
+                <TableCell>
+                  {/* <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          navigator.clipboard.writeText(hero.id.toFixed())
+                        }
+                      >
+                        Copy ID
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem>Delete</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu> */}
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="outline">Edit</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>Edit</AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => selectHero(hero)}>
+                          Yes
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="outline">Delete</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>Delete</AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => deleteHero(hero.id)}>
+                          Yes
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -84,7 +178,7 @@ export function DataTableDemo() {
         </div>
       </div>
 
-      <HeroForm fetch={fetchSuperHeroes} />
+      <HeroForm fetch={fetchSuperHeroes} editedHero={editedHero} />
     </div>
   );
 }
