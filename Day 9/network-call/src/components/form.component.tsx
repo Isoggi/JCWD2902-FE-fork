@@ -1,10 +1,9 @@
 /** @format */
 
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { promise, z } from "zod";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,8 +19,13 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/config/axios.config";
 import { useEffect } from "react";
 import { THero } from "./heroes.component";
+import { useEffect } from "react";
+import { THero } from "./heroes.component";
 
 const formSchema = z.object({
+  id: z.number().optional(),
+  name: z.string().min(10, {
+    message: "Username must be at least 10 characters.",
   id: z.number().nullable(),
   name: z.string({ message: "Bukan string vlog" }).min(10, {
     message: "10 minimalnya abangku.",
@@ -40,10 +44,21 @@ export function HeroForm({ fetch, editedHero }: Props) {
     defaultValues: {
       name: "",
       id: undefined,
+    },
+    defaultValues: {
+      name: "",
+      id: undefined,
       username: "",
     },
   });
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (form.getValues("id")) {
+      await api.patch("/superheroes/" + values.id, values);
+    } else {
+      await api.post("/superheroes", values);
+    }
+    form.control._reset();
     console.log(values);
     if (form.getValues("id"))
       await api.patch(`/superheroes/${values.id}`, values);
@@ -58,6 +73,13 @@ export function HeroForm({ fetch, editedHero }: Props) {
       form.setValue("username", editedHero.username ?? "");
     }
   }, [editedHero]);
+
+  useEffect(() => {
+    if (editHero?.name && editHero?.id) {
+      form.setValue("name", editHero.name);
+      form.setValue("id", editHero.id);
+    }
+  }, [editHero]);
 
   return (
     <Form {...form}>
@@ -80,6 +102,7 @@ export function HeroForm({ fetch, editedHero }: Props) {
             </FormItem>
           )}
         />
+
 
         <FormField
           control={form.control}

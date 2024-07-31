@@ -38,10 +38,24 @@ import {
 
 export type THero = (typeof superheroes)[0] | null;
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+export type THero = (typeof superheroes)[0] | null;
+
 export function DataTableDemo() {
   const [data, setData] = React.useState<typeof superheroes>([]);
   const [search, setSearch] = React.useState<string>("");
-  const [editedHero, setEditedHero] = React.useState<THero>(null);
+  const [editHero, setEditHero] = React.useState<THero>(null);
 
   const fetchSuperHeroes = async () => {
     const response = await api.get("/superheroes", {
@@ -53,12 +67,12 @@ export function DataTableDemo() {
   };
 
   const deleteHero = async (id: number) => {
-    await api.delete(`/superheroes/${id}`);
+    await api.delete("/superheroes/" + id);
     await fetchSuperHeroes();
   };
 
   const selectHero = async (hero: THero) => {
-    setEditedHero(hero);
+    setEditHero(hero);
   };
 
   React.useEffect(() => {
@@ -74,13 +88,14 @@ export function DataTableDemo() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead> ID</TableHead>
               <TableHead> NAME</TableHead>
-              <TableHead> ACTION</TableHead>
+              <TableHead className="w-10"> ACTION</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -88,57 +103,23 @@ export function DataTableDemo() {
               <TableRow key={key}>
                 <TableCell>{hero.id}</TableCell>
                 <TableCell>{hero.name}</TableCell>
-                <TableCell>
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem
-                        onClick={() =>
-                          navigator.clipboard.writeText(hero.id.toFixed())
-                        }
-                      >
-                        Copy ID
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
+                <TableCell className="flex justify-center gap-2">
+                  <Button onClick={() => selectHero(hero)}>Edit</Button>
+
                   <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="outline">Edit</Button>
+                    <AlertDialogTrigger>
+                      <Button variant={"destructive"}>Delete</Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
                           Are you absolutely sure?
                         </AlertDialogTitle>
-                        <AlertDialogDescription>Edit</AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => selectHero(hero)}>
-                          Yes
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="outline">Delete</Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>Delete</AlertDialogDescription>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete your hero and remove your data from our
+                          servers.
+                        </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -178,7 +159,7 @@ export function DataTableDemo() {
         </div>
       </div>
 
-      <HeroForm fetch={fetchSuperHeroes} editedHero={editedHero} />
+      <HeroForm fetch={fetchSuperHeroes} editHero={editHero} />
     </div>
   );
 }
