@@ -3,7 +3,7 @@
 // import { IProduct } from "@/interfaces/product.interface";
 // import Image from "next/image";
 import React from "react";
-import { DynamicCSR } from "./components/page";
+import { DynamicCSR } from "./components/csr";
 
 type Props = {};
 
