@@ -52,6 +52,20 @@ import {
 
 export type THero = (typeof superheroes)[0] | null;
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+export type THero = (typeof superheroes)[0] | null;
+
 export function DataTableDemo() {
   const [data, setData] = React.useState<typeof superheroes>([]);
   const [search, setSearch] = React.useState<string>("");
