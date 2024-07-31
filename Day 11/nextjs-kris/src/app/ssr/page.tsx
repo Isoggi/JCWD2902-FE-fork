@@ -9,7 +9,9 @@ type Props = {};
 export default async function SSRPage({}: Props) {
   const product: IProduct[] = (await api.get("/products")).data;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?slug`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?slug`, {
+    next: { revalidate: 10 },
+  });
   return (
     <center>
       <div className="max-w-screen-sm grid grid-cols-3 gap-3">
