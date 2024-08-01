@@ -1,5 +1,4 @@
 /** @format */
-
 interface IUser {
   id: number;
   phone_number: string;

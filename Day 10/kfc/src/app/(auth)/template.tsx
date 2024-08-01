@@ -4,10 +4,14 @@ import ProviderContent from "@/components/provider/content.provider";
 import Image from "next/image";
 import React from "react";
 import AbahKFC from "@/../public/abah-kfc.jpeg";
+import { Metadata } from "next";
 type Props = {
   children: React.ReactNode;
 };
-
+export const metadata: Metadata = {
+  title: "KFC Chicken Indonesia",
+  description: "Jagonya Ayam",
+};
 export default function template({ children }: Props) {
   return (
     <ProviderContent>
