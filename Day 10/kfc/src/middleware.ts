@@ -1,13 +1,23 @@
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
-import React from "react";
+/** @format */
 
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+
+// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const res = NextResponse.next();
+  const response = NextResponse.next();
   const user = JSON.parse(cookies().get("user")?.value || "{}") as IUser;
+
   const { pathname } = request.nextUrl;
-  // if(!request.cookies.get('token'))
-  if (user && (pathname === "/login" || pathname === "/register"))
+  if (user.id && (pathname === "/login" || pathname === "/register")) {
     return NextResponse.redirect(new URL("/", request.url));
-  return res;
+  }
+  return response;
 }
+
+// See "Matching Paths" below to learn more
+export const config = {
+  matcher: ["/login", "/register"],
+};
+
