@@ -35,6 +35,18 @@
       "password": "Password123",
       "confirm_password": "Password123",
       "id": 3
+    },
+    {
+      "full_name": "Test - Kristanto Saptadi Nugraha",
+      "phone_number": "081393339432",
+      "gender": "Pria",
+      "date": 15,
+      "month": 9,
+      "year": 1991,
+      "email": "kristantosaptadi@gmail.com",
+      "password": "uwaw1234",
+      "confirm_password": "uwaw1234",
+      "id": 4
     }
   ],
   "categories": [
