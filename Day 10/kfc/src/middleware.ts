@@ -1,6 +1,4 @@
 /** @format */
-
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
@@ -12,6 +10,10 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
   const user = session?.user;
 
+export async function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+  const session = await auth();
+  const user = session?.user;
   const { pathname } = request.nextUrl;
   if (user?.id && (pathname === "/login" || pathname === "/register")) {
     return NextResponse.redirect(new URL("/", request.url));
