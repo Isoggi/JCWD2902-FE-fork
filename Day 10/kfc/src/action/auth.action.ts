@@ -4,7 +4,8 @@ import { api } from "@/config/axios.config";
 import { loginSchema, registerSchema } from "@/schemas/auth.schema";
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
+import { redirect } from "next/dist/server/api-utils";
 
 export const loginAction = async (values: z.infer<typeof loginSchema>) => {
   // try {
@@ -49,6 +50,19 @@ export const actionRegister = async (
   } catch (error) {
     return {
       message: "Register Gagal",
+    };
+  }
+};
+
+export const actionLogOut = async () => {
+  try {
+    return await signOut({ redirect: false, redirectTo: "/login" });
+    // return {
+    //   message: "Logout Berhasil",
+    // };
+  } catch (error) {
+    return {
+      message: "Logout Gagal",
     };
   }
 };
