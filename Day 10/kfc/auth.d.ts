@@ -1,11 +1,10 @@
-/** @format */
 
 declare module "next-auth" {
   interface User {
     id: number | undefined;
-    phone_number: string | undefined;
     email: string | undefined;
     full_name: string | undefined;
+    phone_number: string | undefined;
     gender: "Pria" | "Perempuan" | undefined;
   }
 

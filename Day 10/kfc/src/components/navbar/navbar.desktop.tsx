@@ -1,9 +1,10 @@
-/** @format */
+
 import Image from "next/image";
 import React from "react";
 import Logo from "@/../public/kfc-logo.svg";
 import Link from "next/link";
 import "./navbar.css";
+
 import { auth } from "@/auth";
 import ButtonLogout from "./button.navbar";
 export default async function NavbarDesktop() {
@@ -45,8 +46,8 @@ export default async function NavbarDesktop() {
             <div className="avatar"></div>
             <div className="cart">1</div>
           </div>
-
           <ButtonLogout />
+
         </div>
       </div>
     </div>

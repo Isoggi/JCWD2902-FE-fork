@@ -1,4 +1,4 @@
-/** @format */
+
 import { api } from "@/config/axios.config";
 import { loginSchema } from "@/schemas/auth.schema";
 import NextAuth from "next-auth";
@@ -29,6 +29,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
           delete user.confirm_password;
           return user;
         } catch (error) {
+          console.log(error);
           return null;
         }
       },
@@ -58,7 +59,6 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
       if (trigger === "update" && session) {
         token = { ...token, ...session };
       }
-
       return token;
     },
   },

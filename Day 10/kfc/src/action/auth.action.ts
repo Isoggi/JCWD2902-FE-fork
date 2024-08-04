@@ -36,3 +36,16 @@ export const actionRegister = async (
     };
   }
 };
+
+export const actionLogOut = async () => {
+  try {
+    return await signOut({ redirect: false, redirectTo: "/login" });
+    // return {
+    //   message: "Logout Berhasil",
+    // };
+  } catch (error) {
+    return {
+      message: "Logout Gagal",
+    };
+  }
+};
